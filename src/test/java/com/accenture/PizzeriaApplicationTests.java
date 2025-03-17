@@ -1,7 +1,7 @@
 package com.accenture;
 
 import com.accenture.exception.PizzaException;
-import com.accenture.model.Ingredients;
+import com.accenture.model.Ingredient;
 import com.accenture.model.Pizza;
 import com.accenture.model.Tailles;
 import com.accenture.repository.PizzaDao;
@@ -13,10 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,7 +89,11 @@ class PizzeriaApplicationTests {
 
 
 	private static Pizza creerPizza() {
-		return new Pizza("Margherita", Tailles.PETITE, Arrays.asList("basilic","mozzarella","tomate"));
+
+		Ingredient ingredient = new Ingredient();
+		ingredient.setChorizo("Chorizo");
+		ingredient.setTomate("Tomate");
+		return new Pizza("Margherita", Tailles.PETITE, 15 , ingredient);
 	}
 
 
