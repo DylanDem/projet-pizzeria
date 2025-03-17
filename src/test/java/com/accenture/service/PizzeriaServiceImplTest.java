@@ -1,11 +1,9 @@
-package com.accenture;
+package com.accenture.service;
 
 import com.accenture.exception.PizzaException;
-import com.accenture.model.Ingredients;
 import com.accenture.model.Pizza;
 import com.accenture.model.Tailles;
 import com.accenture.repository.PizzaDao;
-import com.accenture.service.PizzaServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,16 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class PizzeriaApplicationTests {
+class PizzeriaServiceImplTest {
 
 	@InjectMocks
 	private PizzaServiceImpl service;
