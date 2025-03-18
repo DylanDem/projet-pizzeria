@@ -20,7 +20,7 @@ public class Pizza {
     private Tailles tailles;
     private int tarif;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Ingredient ingredients;
 
     public Pizza(String nom, Tailles tailles, int tarif, Ingredient ingredients) {

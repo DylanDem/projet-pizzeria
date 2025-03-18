@@ -1,4 +1,4 @@
 package com.accenture.service.dto;
 
-public class IngredientDto {
+public record IngredientDto () {
 }
