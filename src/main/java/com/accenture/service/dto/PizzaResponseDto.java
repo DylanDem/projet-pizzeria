@@ -6,7 +6,7 @@ public record PizzaResponseDto (
 
     String nom,
     Tailles tailles,
-    IngredientDto ingredient,
+    IngredientRequestDto ingredient,
     int tarif
 
 ) {}

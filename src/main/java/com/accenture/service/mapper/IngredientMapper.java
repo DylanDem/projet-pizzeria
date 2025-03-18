@@ -1,15 +1,15 @@
 package com.accenture.service.mapper;
 
 import com.accenture.model.Ingredient;
-import com.accenture.service.dto.IngredientDto;
+import com.accenture.service.dto.IngredientRequestDto;
+import com.accenture.service.dto.IngredientResponseDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface IngredientMapper {
 
-    Ingredient toIngredient(IngredientDto ingredientDto);
+    Ingredient toIngredient(IngredientRequestDto ingredientRequestDto);
 
-    IngredientDto toIngredientDto (Ingredient ingredient);
-
+    IngredientResponseDto toIngredientResponseDto (Ingredient ingredient);
 }
 

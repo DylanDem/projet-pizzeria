@@ -3,9 +3,10 @@ package com.accenture.service;
 import com.accenture.exception.PizzaException;
 import com.accenture.model.Pizza;
 import com.accenture.repository.PizzaDao;
+import org.springframework.stereotype.Service;
 
 
-
+@Service
 public class PizzaServiceImpl implements PizzaService {
 
     private final PizzaDao pizzaDao;

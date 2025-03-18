@@ -17,13 +17,15 @@ public class Pizza {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
+
+    @Enumerated(EnumType.STRING)
     private Tailles tailles;
     private int tarif;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Ingredient ingredients;
+    @ManyToMany
+    private List<Ingredient> ingredients;
 
-    public Pizza(String nom, Tailles tailles, int tarif, Ingredient ingredients) {
+    public Pizza(String nom, Tailles tailles, int tarif, List<Ingredient> ingredients) {
         this.nom = nom;
         this.tailles = tailles;
         this.tarif = tarif;
