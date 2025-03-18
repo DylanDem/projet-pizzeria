@@ -5,12 +5,14 @@ import com.accenture.model.Tailles;
 
 import java.util.List;
 
-public class PizzaRequestDto {
+public record PizzaRequestDto (
 
-    String nom;
-    Tailles tailles;
-    IngredientDto ingredient;
-    int tarif;
+    String nom,
+    Tailles tailles,
+    IngredientDto ingredient,
+    int tarif
 
+
+) {
 
 }

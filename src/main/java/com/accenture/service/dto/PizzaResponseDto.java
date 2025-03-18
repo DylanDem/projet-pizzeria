@@ -2,10 +2,11 @@ package com.accenture.service.dto;
 
 import com.accenture.model.Tailles;
 
-public class PizzaResponseDto {
+public record PizzaResponseDto (
 
-    String nom;
-    Tailles tailles;
-    IngredientDto ingredient;
-    int tarif;
-}
+    String nom,
+    Tailles tailles,
+    IngredientDto ingredient,
+    int tarif
+
+) {}
