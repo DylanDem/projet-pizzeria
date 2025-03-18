@@ -1,33 +1,32 @@
 package com.accenture.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Pizza {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
     private Tailles tailles;
-    private List<String> ingredients;
+    private int tarif;
 
-    public Pizza(String nom, Tailles tailles, List<String> ingredients) {
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Ingredient ingredients;
+
+    public Pizza(String nom, Tailles tailles, int tarif, Ingredient ingredient) {
         this.nom = nom;
         this.tailles = tailles;
-        this.ingredients = ingredients;
+        this.tarif = tarif;
+        this.ingredients = ingredient;
     }
-
 }
