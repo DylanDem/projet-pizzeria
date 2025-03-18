@@ -10,4 +10,6 @@ public interface IngredientMapper {
     Ingredient toIngredient(IngredientDto ingredientDto);
 
     IngredientDto toIngredientDto (Ingredient ingredient);
+
 }
+
