@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Ingredients {
+public class Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,16 @@ public class Ingredients {
     private String basilic;
     private String poulet;
     private String thon;
+    private int quantite;
 
-
-
+    public Ingredient(String mozzarella, String chorizo, String olive, String basilic, String poulet, String thon, int quantite, String tomate) {
+        this.mozzarella = mozzarella;
+        this.chorizo = chorizo;
+        this.olive = olive;
+        this.basilic = basilic;
+        this.poulet = poulet;
+        this.thon = thon;
+        this.quantite = quantite;
+        this.tomate = tomate;
+    }
 }

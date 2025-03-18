@@ -7,7 +7,9 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {IngredientMapper.class})
 public interface PizzaMapper {
-    Pizza toPizza(PizzaRequestDto pizzaRequestDto);
 
-    PizzaResponseDto toPizzaResponseDto(Pizza pizza);
+Pizza toPizza(PizzaRequestDto pizzaRequestDto);
+
+PizzaResponseDto toPizzaResponseDto(Pizza pizza);
 }
+
