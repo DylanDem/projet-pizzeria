@@ -4,18 +4,20 @@ import com.accenture.exception.IngredientException;
 import com.accenture.exception.PizzaException;
 import com.accenture.model.Ingredient;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
-
+@Slf4j
 @RestControllerAdvice
 public class ApplicationControllerAdvice {
     @ExceptionHandler(PizzaException.class)
     public ResponseEntity<MessageError> handlePizzaException(PizzaException e) {
         MessageError me = new MessageError(LocalDateTime.now(), "Erreur validation", e.getMessage());
+        log.info(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(me);
     }
 
