@@ -2,12 +2,14 @@ package com.accenture.service.dto;
 
 import com.accenture.model.Tailles;
 
+import java.util.List;
+import java.util.Map;
+
 public record PizzaRequestDto (
 
     String nom,
-    Tailles tailles,
-    IngredientRequestDto ingredient,
-    int tarif
+    List<Integer> idIngredient,
+    Map<Tailles, Double> tarifs
 
 
 ) {

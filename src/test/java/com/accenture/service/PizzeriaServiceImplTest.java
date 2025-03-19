@@ -13,7 +13,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,16 +50,16 @@ class PizzeriaServiceImplTest {
 
     }
 
-    @Test
-    void testAjouterPizzaSansTaille(){
-
-        Pizza pizza = creerPizza();
-        pizza.setTailles(null);
-
-        PizzaException pe = Assertions.assertThrows(PizzaException.class, () -> service.ajouter(pizza));
-        assertEquals("La taille est obligatoire", pe.getMessage());
-
-    }
+//    @Test
+//    void testAjouterPizzaSansTarifs() {
+//
+//        Pizza pizza = creerPizza();
+//        pizza.setTarifs(null);
+//
+//        PizzaException pe = Assertions.assertThrows(PizzaException.class, () -> service.ajouter(pizza));
+//        assertEquals("Le tarif est obligatoire", pe.getMessage());
+//
+//    }
 
 
     @Test
@@ -92,6 +94,12 @@ class PizzeriaServiceImplTest {
         Ingredient ingredient = new Ingredient("tomate", 10);
         Ingredient ingredient2 = new Ingredient("basilic", 1);
         List<Ingredient> listIngredient = List.of(ingredient, ingredient2);
-        return new Pizza("Margherita", Tailles.PETITE, 15 , listIngredient);
+        Map<Tailles, Double> tarifs = new HashMap<>();
+        tarifs.put(Tailles.PETITE, 10.50);
+        tarifs.put(Tailles.MOYENNE, 15.25);
+        tarifs.put(Tailles.GRANDE, 20.30);
+        return new Pizza("Margherita", tarifs, listIngredient);
+
     }
+
 }

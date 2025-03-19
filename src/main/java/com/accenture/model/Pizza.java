@@ -1,11 +1,13 @@
 package com.accenture.model;
 
 import jakarta.persistence.*;
+import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -18,17 +20,20 @@ public class Pizza {
     private int id;
     private String nom;
 
-    @Enumerated(EnumType.STRING)
-    private Tailles tailles;
-    private int tarif;
+    @ElementCollection
+    @CollectionTable(name = "pizzas_prix", joinColumns = @JoinColumn(name = "pizza_id"))
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyColumn(name = "taille")// Stocke la clé de l'EnumMap sous forme de chaîne
+    @Column(name = "prix") // Valeur stockée
+    private Map<Tailles, Double> tarifs;
+
 
     @ManyToMany
     private List<Ingredient> ingredients;
 
-    public Pizza(String nom, Tailles tailles, int tarif, List<Ingredient> ingredients) {
+    public Pizza(String nom, Map<Tailles, Double> tarifs, List<Ingredient> ingredients) {
         this.nom = nom;
-        this.tailles = tailles;
-        this.tarif = tarif;
+        this.tarifs = tarifs;
         this.ingredients = ingredients;
     }
 }
