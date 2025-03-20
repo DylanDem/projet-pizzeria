@@ -6,6 +6,9 @@ import com.accenture.model.Ingredient;
 import com.accenture.model.Pizza;
 import com.accenture.model.Tailles;
 import com.accenture.repository.IngredientDao;
+import com.accenture.service.dto.IngredientRequestDto;
+import com.accenture.service.dto.IngredientResponseDto;
+import com.accenture.service.mapper.IngredientMapper;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +32,9 @@ class IngredientServiceImplTest {
 
     @Mock
     private IngredientDao ingredientDao;
+
+    @Mock
+    private IngredientMapper ingredientMapper;
 
 
     @Test
@@ -129,7 +135,48 @@ class IngredientServiceImplTest {
         Mockito.verify(ingredientDao).deleteById(idIngredient);
     }
 
+    @Test
+    void testModifierPartiellementSuccess() {
+        int idIngredient = 1;
+        IngredientRequestDto ingredientRequestDto = new IngredientRequestDto("test", 10);
+        Ingredient ingredientExistant = new Ingredient();
+        Ingredient ingredientASave = new Ingredient();
+        Ingredient ingredientEnreg = new Ingredient();
+        IngredientResponseDto reponseAttendue = new IngredientResponseDto("test", 9);
 
+        Mockito.when(ingredientDao.findById(idIngredient)).thenReturn(Optional.of(ingredientExistant));
+        Mockito.when(ingredientMapper.toIngredient(ingredientRequestDto)).thenReturn(ingredientASave);
+        Mockito.when(ingredientDao.save(ingredientExistant)).thenReturn(ingredientEnreg);
+        Mockito.when(ingredientMapper.toIngredientResponseDto(ingredientEnreg)).thenReturn(reponseAttendue);
+
+
+        IngredientResponseDto reponse = service.modifierPartiellement(idIngredient, ingredientRequestDto);
+
+
+        Mockito.verify(ingredientDao).findById(idIngredient);
+        Mockito.verify(ingredientMapper).toIngredient(ingredientRequestDto);
+        Mockito.verify(ingredientDao).save(ingredientExistant);
+        Mockito.verify(ingredientMapper).toIngredientResponseDto(ingredientEnreg);
+
+        Assertions.assertEquals(reponseAttendue, reponse);
+    }
+
+    @Test
+    void testModifierPartiellementEchec() {
+        int idIngredient = 1;
+        IngredientRequestDto ingredientRequestDto = new IngredientRequestDto("test", 10);
+
+        Mockito.when(ingredientDao.findById(idIngredient)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(EntityNotFoundException.class, () ->
+                service.modifierPartiellement(idIngredient, ingredientRequestDto));
+
+        Mockito.verify(ingredientDao, Mockito.never()).save(Mockito.any());
+    }
+
+    //    =====================================================================================================////
+    //                                                  METHODES PRIVEES////
+    //    =====================================================================================================
 
     private static Ingredient creerIngredient() {
 

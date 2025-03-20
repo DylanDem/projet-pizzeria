@@ -1,5 +1,5 @@
 INSERT INTO INGREDIENT (nom, quantite) VALUES
-('chèvre', 5),('basilic', 5);
+('chèvre', 5),('basilic', 5), ('beurre-sale', 100), ('galette', 3);
 
 INSERT INTO PIZZA (nom) VALUES
 ('Margherita'),('Chèvre_miel');
