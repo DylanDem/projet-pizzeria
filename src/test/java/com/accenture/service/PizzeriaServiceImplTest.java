@@ -174,6 +174,26 @@ class PizzeriaServiceImplTest {
 
     }
 
+    @Test
+    void testTrouverParNom() {
+        PizzaRequestDto pizzaRequestDto = creerPizza();
+        Pizza pizza = service.toPizza(pizzaRequestDto);
+        Mockito.when(pizzaDao.findByNom("Margherita")).thenReturn(Optional.of(pizza));
+        Pizza trouve = assertDoesNotThrow(() -> service.trouverParNom("Margherita"));
+        assertSame("Margherita", trouve.getNom());
+        Mockito.verify(pizzaDao).findByNom("Margherita");
+    }
+
+    @Test
+    void testTrouverParNomPasOk() {
+        PizzaRequestDto pizzaRequestDto = creerPizza();
+        Pizza pizza = service.toPizza(pizzaRequestDto);
+        Mockito.when(pizzaDao.findByNom("Margherita")).thenReturn(Optional.empty());
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> service.trouverParNom("Margherita"));
+        assertEquals("La pizza n'existe pas", ex.getMessage());
+        Mockito.verify(pizzaDao).findByNom("Margherita");
+    }
+
 
     //    =====================================================================================================////
     //                                                  METHODES PRIVEES////

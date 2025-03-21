@@ -25,6 +25,11 @@ public class PizzaServiceImpl implements PizzaService {
         this.ingredientDao = ingredientDao;
     }
 
+    @Override
+    public Pizza trouverParNom(String pizza) {
+        return (pizzaDao.findByNom(pizza)
+                .orElseThrow(() -> new EntityNotFoundException("La pizza n'existe pas")));}
+
 
 
     @Override

@@ -36,7 +36,7 @@ class IngredientControllerImplTest {
 
     @Test
     void testPostIngredientAvecObjet() throws Exception {
-        Ingredient ingredient = new Ingredient("Tomate",1);
+        Ingredient ingredient = new Ingredient("Tomate", 1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/ingredients")
@@ -50,7 +50,7 @@ class IngredientControllerImplTest {
 
     @Test
     void testPostIngredientPasOK() throws Exception {
-        Ingredient ingredient = new Ingredient(null,1);
+        Ingredient ingredient = new Ingredient(null, 1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/ingredients")

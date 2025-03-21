@@ -7,6 +7,8 @@ import com.accenture.service.dto.PizzaResponseDto;
 import java.util.List;
 
 public interface PizzaService {
+    Pizza trouverParNom(String pizza);
+
     PizzaResponseDto ajouter(PizzaRequestDto pizzaRequestDto);
 
     List<Pizza> trouverTous();

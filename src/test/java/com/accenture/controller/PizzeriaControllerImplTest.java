@@ -1,7 +1,5 @@
 package com.accenture.controller;
 
-import com.accenture.model.Ingredient;
-import com.accenture.model.Pizza;
 import com.accenture.model.Tailles;
 import com.accenture.service.dto.PizzaRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,8 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,25 +33,35 @@ class PizzeriaControllerImplTest {
     }
 
 
-//    @Test
-//    void testPostPizzaAvecObjet() throws Exception {
-//        PizzaRequestDto pizzaRequestDto = creerPizza();
-//        mockMvc.perform(MockMvcRequestBuilders.post("/pizzas")
-//                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(pizzaRequestDto)))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.id").isNumber())
-//                .andExpect(jsonPath("$.id").value(Matchers.not(0)))
-//                .andExpect(jsonPath("$.nom").value("Margherita"));
-//    }
-//    TODO : corriger cette méthode
+    @Test
+    void testPostPizzaAvecObjet() throws Exception {
+        PizzaRequestDto pizzaRequestDto = creerPizza();
+        mockMvc.perform(MockMvcRequestBuilders.post("/pizzas")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(pizzaRequestDto)))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", Matchers.startsWith("http://localhost/pizzas/")))
+                .andExpect(header().string("Location", "http://localhost/pizzas/3"));
+
+    }
+
+    @Test
+    void testTrouverOK() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/pizzas/2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(2))
+                .andExpect(jsonPath("$.nom").value("Chèvre_miel"))
+                .andExpect(jsonPath("$.ingredients[*].nom").value(Matchers.hasItem(Matchers.containsString("basilic"))))
+                .andExpect(jsonPath("$.tarifs.MOYENNE").value(15.3));
+    }
 
     @Test
     void testPostPizzaPasOK() throws Exception {
         PizzaRequestDto pizza = creerPizzaNomNull();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/pizzas")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(pizza)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(pizza)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.type").value("Erreur validation")).andExpect(jsonPath("$.message").value("Le nom est obligatoire"));
     }
@@ -73,6 +80,20 @@ class PizzeriaControllerImplTest {
     void testDeletePizzaPasOK() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/pizzas/115")).andExpect(status().isNotFound()).andExpect(jsonPath("$.type").value("Erreur fonctionnelle")).andExpect(jsonPath("$.message").value(PIZZA_N_EXISTE_PAS));
     }
+
+    @Test
+    void testTrouverParNomOK() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/pizzas/search?nom=Margherita"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()")
+                        .value(4));
+    }
+
+    @Test
+    void testTrouverPizzaParNomPasOk() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/pizzas/search?nom=iklzh")).andExpect(status().isNotFound()).andExpect(jsonPath("$.type").value("Erreur fonctionnelle")).andExpect(jsonPath("$.message").value(PIZZA_N_EXISTE_PAS));
+    }
+
 
     //    =====================================================================================================////
     //                                                  METHODES PRIVEES////

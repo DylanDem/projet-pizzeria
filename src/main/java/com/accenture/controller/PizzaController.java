@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/pizzas")
 public class PizzaController {
-    private PizzaService pizzaService;
+    private final PizzaService pizzaService;
 
     public PizzaController(PizzaService pizzaService) {
         this.pizzaService = pizzaService;
@@ -71,6 +71,14 @@ public class PizzaController {
     ResponseEntity<Pizza> trouver(@PathVariable("idPizza") int idPizza) {
         log.info("Recherche de la pizza avec l'ID : {}", idPizza);
         Pizza pizza = pizzaService.trouver(idPizza);
+        log.debug("Pizza trouvée : {}", pizza);
+        return ResponseEntity.ok(pizza);
+    }
+
+    @GetMapping("/search")
+    ResponseEntity<Pizza> trouverParNom(@RequestParam("nom") String nomPizza) {
+        log.info("Recherche de la pizza avec le nom : {}", nomPizza);
+        Pizza pizza = pizzaService.trouverParNom(nomPizza);
         log.debug("Pizza trouvée : {}", pizza);
         return ResponseEntity.ok(pizza);
     }
